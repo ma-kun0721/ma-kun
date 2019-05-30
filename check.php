@@ -1,7 +1,13 @@
 <?php 
-$nickname = $_POST['nickname'];
+if($_SERVER['REQUEST_METHOD'] === 'GET'){
+    header('Location: index.html');
+}
+
+$nickname =  htmlspecialchars($_POST['nickname']);
+  // 関数のよびだし
+    require_once('function.php');
 // スーパーグローバル関数
-$nickname = $_POST['nickname'];
+$nickname = h($_POST['nickname']);
 $email = $_POST['email'];
 $content = $_POST['content'];
 // var_dump($_POST);
@@ -38,5 +44,12 @@ if($nickname == '') {
 <p><?php echo $nickname_result ?></p>
 <p><?php echo $email_result ?></p>
 <p><?php echo $content_result ?></p>
+<form method="POST" action="thanks.php">
+  <input type="button" value=" 戻る" onclick="
+  history.back()">
+  <?php if ($email != '' && $nickname !=''):?>
+    <input type="submit" value="ok">
+  <?php endif; ?>
+</form>
 </body>
 </html>
